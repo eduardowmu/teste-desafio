@@ -2,6 +2,7 @@ package br.edu.infuse.app.utils;
 
 import java.time.LocalDateTime;
 
+import br.edu.infuse.app.model.Client;
 import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.vo.EntityVo;
 
@@ -12,7 +13,6 @@ public class EntityUtils {
 	
 	public static Order getOrderFromEntityVo(EntityVo vo) {
 		return Order.builder()
-					.id(vo.getId() != null ? vo.getId() : null)
 					.controlCode(vo.getControlCode() != null ? vo.getControlCode() : "")
 					.orderDate(vo.getOrderDate() != null ? LocalDateTime.parse(vo.getOrderDate()) : LocalDateTime.now())
 					.productName(vo.getProductName() != null ? vo.getProductName() : "")
@@ -20,7 +20,7 @@ public class EntityUtils {
 					.quantity(vo.getQuantity() != null ? vo.getQuantity() : 1)
 					.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() : 
 						vo.getProductValue() * (vo.getQuantity() != null ? vo.getQuantity() : 1))
-					.customerCode(vo.getCustomerCode() != null ? vo.getCustomerCode() : "")
+					.customerCode(vo.getCustomerCode() != null ? vo.getCustomerCode() : 0)
 					.build();
 	}
 	
@@ -35,7 +35,20 @@ public class EntityUtils {
 					.quantity(order.getQuantity() != null ? order.getQuantity() : 1)
 					.orderValue(order.getOrderValue() != null ? order.getOrderValue() : 
 						order.getProductValue() * (order.getQuantity() != null ? order.getQuantity() : 1))
-					.customerCode(order.getCustomerCode() != null ? order.getCustomerCode() : "")
+					.customerCode(order.getCustomerCode() != null ? order.getCustomerCode() : 0)
 					.build();
+	}
+
+	public static Client getClientFromEntityVo(EntityVo vo) {
+		return Client.builder()
+				.clientName(vo.getName() != null ? vo.getName() : "")
+				.build();
+	}
+
+	public static EntityVo getEntityVoFromClient(Client client) {
+		return EntityVo.builder()
+				.id(client.getId() != null ? client.getId() : null)
+				.name(client.getClientName() != null ? client.getClientName() : "")
+				.build();
 	}
 }
