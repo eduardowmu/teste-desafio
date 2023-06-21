@@ -7,6 +7,7 @@ import java.util.Map;
 
 import br.edu.infuse.app.exception.NotFoundException;
 import br.edu.infuse.app.model.Client;
+import br.edu.infuse.app.strategy.ValidateClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,27 +22,30 @@ import br.edu.infuse.app.utils.EventUtils;
 
 @Service
 public class OrderService extends FacadeImpl {
-	@Autowired
-	private OrderRepository orderRepository;
+	private final OrderRepository orderRepository;
 	
-	@Autowired
-	private ClientService clientService;
+	private final ClientService clientService;
 	
 	@Autowired
 	private MessageService messageService;
-	
-	
-	public OrderService() {
+
+
+	@Autowired
+	public OrderService(OrderRepository orderRepository, ClientService clientService) {
+		this.orderRepository = orderRepository;
+		this.clientService = clientService;
 		this.rules = new HashMap<>();
 		
 		//list of Validators to create Order
 		ValidateDiscount vd = new ValidateDiscount();
-		ValidateControlNumber vc = new ValidateControlNumber();
+		ValidateControlNumber vc = new ValidateControlNumber(this.orderRepository);
+		ValidateClient vcl = new ValidateClient(this.clientService);
 		
 		//Add validates to rules on creating order
 		List<Validator> brSaveOrder = new ArrayList<>();
 		brSaveOrder.add(vc);
 		brSaveOrder.add(vd);
+		brSaveOrder.add(vcl);
 		
 		//Add validates to rules on creating order
 		List<Validator> brListStudent = new ArrayList<>();
@@ -50,13 +54,14 @@ public class OrderService extends FacadeImpl {
 		Map<String, List<Validator>> orderRules = new HashMap<>();
 		orderRules.put(EventUtils.SAVE, brSaveOrder);
 		orderRules.put(EventUtils.LIST, brListStudent);
+
+        this.rules.put(Order.class.getSimpleName(), orderRules);
 	}
 	
 	@Override
 	public Order save(EntityDomain ed) {
 		try {
 			Order order = (Order)this.getEntityFromRules(ed, EventUtils.SAVE);
-			this.checkOthersExceptions(order);
 			return this.orderRepository.save(order);
 		} catch(Exception e) {
 			this.messageService.save(EventUtils.saveException(e));
@@ -75,14 +80,5 @@ public class OrderService extends FacadeImpl {
 			i++;
 		}
 		return entities;
-	}
-
-	private void checkOthersExceptions(Order order) throws BadRequestException, NotFoundException {
-		Order existedOrder = this.orderRepository.findByControlCode(order.getControlCode());
-		if(existedOrder != null) {
-			throw new BadRequestException("Numero controle já existente!");
-		}
-		Client client = this.clientService.findById(order.getCustomerCode())
-				.orElseThrow(() -> new NotFoundException("Cliente não encontrado!"));
 	}
 }

@@ -11,7 +11,7 @@ public abstract class FacadeImpl implements Facade {
 	protected Map<String, Map<String, List<Validator>>> rules;
 	
 	protected EntityDomain getEntityFromRules(EntityDomain ed, String event) {
-		Map<String, List<Validator>> operationRules = this.rules.get(ed.getClass().getName());
+		Map<String, List<Validator>> operationRules = this.rules.get(ed.getClass().getSimpleName());
 		if(operationRules != null) {
 			List<Validator> rulesList = operationRules.get(event);
 			if(rulesList != null) {
