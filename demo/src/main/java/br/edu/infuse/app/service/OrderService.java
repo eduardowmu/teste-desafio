@@ -5,13 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.edu.infuse.app.exception.NotFoundException;
-import br.edu.infuse.app.model.Client;
 import br.edu.infuse.app.strategy.ValidateClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.edu.infuse.app.exception.BadRequestException;
 import br.edu.infuse.app.model.EntityDomain;
 import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.repository.OrderRepository;
