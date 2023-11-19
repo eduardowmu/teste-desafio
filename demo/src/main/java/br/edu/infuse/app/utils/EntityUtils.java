@@ -2,6 +2,7 @@ package br.edu.infuse.app.utils;
 
 import java.time.LocalDateTime;
 
+import br.edu.infuse.app.model.Client;
 import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.vo.EntityVo;
 
@@ -12,15 +13,15 @@ public class EntityUtils {
 	
 	public static Order getOrderFromEntityVo(EntityVo vo) {
 		return Order.builder()
-					.id(vo.getId() != null ? vo.getId() : null)
 					.controlCode(vo.getControlCode() != null ? vo.getControlCode() : "")
-					.orderDate(vo.getOrderDate() != null ? LocalDateTime.parse(vo.getOrderDate()) : LocalDateTime.now())
+					.orderDate(vo.getOrderDate() != null || vo.getOrderDate().isEmpty() ?
+							LocalDateTime.parse(vo.getOrderDate()) : LocalDateTime.now())
 					.productName(vo.getProductName() != null ? vo.getProductName() : "")
 					.productValue(vo.getProductValue() != null ? vo.getProductValue() : 0.00)
-					.quantity(vo.getQuantity() != null ? vo.getQuantity() : 1)
-					.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() : 
-						vo.getProductValue() * (vo.getQuantity() != null ? vo.getQuantity() : 1))
-					.customerCode(vo.getCustomerCode() != null ? vo.getCustomerCode() : "")
+					.quantity(vo.getQuantity() != null && vo.getQuantity() != 0 ? vo.getQuantity() : 1)
+					.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() :
+						vo.getProductValue() * (vo.getQuantity()))
+					.customerCode(vo.getCustomerCode() != null ? vo.getCustomerCode() : 0)
 					.build();
 	}
 	
@@ -32,10 +33,28 @@ public class EntityUtils {
 						FormatUtils.dateFormat(LocalDateTime.now()))
 					.productName(order.getProductName() != null ? order.getProductName() : "")
 					.productValue(order.getProductValue() != null ? order.getProductValue() : 0.00)
-					.quantity(order.getQuantity() != null ? order.getQuantity() : 1)
+					.quantity(getValue(order.getQuantity()))
 					.orderValue(order.getOrderValue() != null ? order.getOrderValue() : 
-						order.getProductValue() * (order.getQuantity() != null ? order.getQuantity() : 1))
-					.customerCode(order.getCustomerCode() != null ? order.getCustomerCode() : "")
+						order.getProductValue() * getValue(order.getQuantity()))
+					.customerCode(order.getCustomerCode() != null ? order.getCustomerCode() : 0)
 					.build();
 	}
+
+	public static Client getClientFromEntityVo(EntityVo vo) {
+		return Client.builder()
+				.clientName(vo.getName() != null ? vo.getName() : "")
+				.build();
+	}
+
+	public static EntityVo getEntityVoFromClient(Client client) {
+		return EntityVo.builder()
+				.id(client.getId() != null ? client.getId() : null)
+				.name(client.getClientName() != null ? client.getClientName() : "")
+				.build();
+	}
+
+	private static Integer getValue(Integer value) {
+		return value != null && value != 0 ? value : 1;
+	}
+
 }

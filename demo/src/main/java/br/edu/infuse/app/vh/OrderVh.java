@@ -5,6 +5,7 @@ import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.utils.EntityUtils;
 import br.edu.infuse.app.vo.EntityVo;
 
+//View Helper Patterns
 public class OrderVh implements EntityVh {
 
 	@Override

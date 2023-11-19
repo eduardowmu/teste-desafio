@@ -6,14 +6,19 @@ import lombok.Data;
 
 @Data
 @Builder
-@Entity
 public class EntityVo {
+	//for both entities
 	private Long id;
+
+	//for client
+	private String name;
+
+	//for Order
 	private String controlCode;
 	private String orderDate;
 	private Double orderValue;
 	private String productName;
 	private Double productValue;
 	private Integer quantity;
-	private String customerCode;
+	private Long customerCode;
 }
