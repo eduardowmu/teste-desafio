@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.edu.infuse.app.mapper.ClientMapper;
+import br.edu.infuse.app.mapper.OrderMapper;
 import br.edu.infuse.app.vh.ClientVh;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,7 @@ import br.edu.infuse.app.vo.EntityVo;
 public class AppController {
 	private final OrderService orderService;
 	private final ClientService clientService;
+
 	private OrderVh orderVh;
 	private ClientVh clientVh;
 	
@@ -36,7 +39,8 @@ public class AppController {
 	private Map<String, EntityVh> viewHelper;
 	
 	@Autowired
-	public AppController(OrderService orderService,ClientService clientService) {
+	public AppController(OrderService orderService,ClientService clientService,
+						 OrderMapper orderMapper, ClientMapper clientMapper) {
 		this.orderService = orderService;
 		this.clientService = clientService;
 		this.service = new HashMap<>();
@@ -50,7 +54,7 @@ public class AppController {
 		this.viewHelper.put(EntityUtils.CLIENT, this.clientVh);
 	}
 	
-	@GetMapping(value = PathUtils.LIST, produces = {"application/json", 
+	@GetMapping(value = PathUtils.LIST, produces = {"application/json",
 			"application/xml"})
 	public List<EntityVo> listAll(@PathVariable(EntityUtils.ENTITY) String entity) {
 		List<EntityDomain> entities = this.service.get(entity).listAll();
@@ -59,12 +63,19 @@ public class AppController {
 		return listVo;
 	}
 	
-	@PostMapping(value = PathUtils.SAVE, produces = {"application/json", "application/xml"}, 
-				consumes = {"application/json", "application/xml"})
-	public EntityVo save(@PathVariable(EntityUtils.ENTITY) String entity, @RequestBody EntityVo vo) {
-		EntityDomain request = this.viewHelper.get(entity).getEntity(vo);
-		EntityDomain response = this.service.get(entity).save(request);
-		EntityVo responseVo = this.viewHelper.get(entity).getEntityVo(response);
-		return responseVo;
+//	@PostMapping(value = PathUtils.SAVE, produces = {"application/json", "application/xml"},
+//				consumes = {"application/json", "application/xml"})
+//	public EntityVo save(@PathVariable(EntityUtils.ENTITY) String entity, @RequestBody EntityVo vo) {
+//		EntityDomain request = this.viewHelper.get(entity).getEntity(vo);
+//		EntityDomain response = this.service.get(entity).save(request);
+//		EntityVo responseVo = this.viewHelper.get(entity).getEntityVo(response);
+//		return responseVo;
+//	}
+
+	@PostMapping(value = PathUtils.SAVE, produces = {"application/json", "application/xml"},
+			consumes = {"application/json", "application/xml"})
+	public List<EntityVo> save(@PathVariable(EntityUtils.ENTITY) String entity, @RequestBody List<EntityVo> entityVoList) {
+
+		return null;
 	}
 }

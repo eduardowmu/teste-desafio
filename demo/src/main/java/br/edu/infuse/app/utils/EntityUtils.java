@@ -19,8 +19,7 @@ public class EntityUtils {
 					.productName(vo.getProductName() != null ? vo.getProductName() : "")
 					.productValue(vo.getProductValue() != null ? vo.getProductValue() : 0.00)
 					.quantity(vo.getQuantity() != null && vo.getQuantity() != 0 ? vo.getQuantity() : 1)
-					.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() :
-						vo.getProductValue() * (vo.getQuantity()))
+					.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() : vo.getProductValue() * vo.getQuantity())
 					.customerCode(vo.getCustomerCode() != null ? vo.getCustomerCode() : 0)
 					.build();
 	}

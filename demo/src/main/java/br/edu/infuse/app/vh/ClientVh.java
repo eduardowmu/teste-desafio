@@ -1,11 +1,15 @@
 package br.edu.infuse.app.vh;
 
+import br.edu.infuse.app.mapper.ClientMapper;
 import br.edu.infuse.app.model.Client;
 import br.edu.infuse.app.model.EntityDomain;
 import br.edu.infuse.app.utils.EntityUtils;
 import br.edu.infuse.app.vo.EntityVo;
+import org.springframework.beans.factory.annotation.Autowired;
+
 //View Helper Patterns
 public class ClientVh implements EntityVh {
+
     @Override
     public Client getEntity(EntityVo vo) {
         return EntityUtils.getClientFromEntityVo(vo);

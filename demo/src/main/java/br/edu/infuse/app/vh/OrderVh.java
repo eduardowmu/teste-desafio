@@ -1,9 +1,11 @@
 package br.edu.infuse.app.vh;
 
+import br.edu.infuse.app.mapper.OrderMapper;
 import br.edu.infuse.app.model.EntityDomain;
 import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.utils.EntityUtils;
 import br.edu.infuse.app.vo.EntityVo;
+import org.springframework.beans.factory.annotation.Autowired;
 
 //View Helper Patterns
 public class OrderVh implements EntityVh {
