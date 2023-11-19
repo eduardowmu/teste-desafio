@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class EntityVo {
-	//for both entites
+	//for both entities
 	private Long id;
 
 	//for client

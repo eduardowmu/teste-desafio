@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import br.edu.infuse.app.exception.BadRequestException;
-import br.edu.infuse.app.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class ClientService extends FacadeImpl {
 		return null;
 	}
 
-	public Optional<Client> findById(Long id) throws NotFoundException {
+	public Optional<Client> findById(Long id) {
 		return this.clientRepository.findById(id);
 	}
 }

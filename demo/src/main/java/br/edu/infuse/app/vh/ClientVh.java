@@ -4,7 +4,7 @@ import br.edu.infuse.app.model.Client;
 import br.edu.infuse.app.model.EntityDomain;
 import br.edu.infuse.app.utils.EntityUtils;
 import br.edu.infuse.app.vo.EntityVo;
-
+//View Helper Patterns
 public class ClientVh implements EntityVh {
     @Override
     public Client getEntity(EntityVo vo) {
