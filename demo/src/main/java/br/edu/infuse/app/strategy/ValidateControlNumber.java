@@ -6,6 +6,8 @@ import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 public class ValidateControlNumber implements Validator {
 	private final OrderRepository orderRepository;
 
@@ -20,8 +22,8 @@ public class ValidateControlNumber implements Validator {
 		if(order.getControlCode() == null || order.getCustomerCode().equals("")) {
 			throw new BadRequestException("Numero de controle inválido!");
 		}
-		Order existedOrder = this.orderRepository.findByControlCode(order.getControlCode());
-		if(existedOrder != null) {
+		Optional<Order> existedOrder = this.orderRepository.findByControlCode(order.getControlCode());
+		if(existedOrder.isPresent()) {
 			throw new BadRequestException("Numero controle já existente!");
 		}
 		return order;

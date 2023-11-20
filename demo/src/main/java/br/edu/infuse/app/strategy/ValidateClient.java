@@ -1,6 +1,7 @@
 package br.edu.infuse.app.strategy;
 
 import br.edu.infuse.app.exception.BadRequestException;
+import br.edu.infuse.app.model.Client;
 import br.edu.infuse.app.model.EntityDomain;
 import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.service.ClientService;
@@ -16,7 +17,8 @@ public class ValidateClient implements Validator {
     @Override
     public EntityDomain process(EntityDomain ed) throws BadRequestException {
         Order order = (Order)ed;
-        return this.clientService.findById(order.getCustomerCode())
+        Client client = this.clientService.findById(order.getCustomerCode())
                 .orElseThrow(() -> new BadRequestException("Cliente não encontrado!"));
+        return order;
     }
 }
