@@ -1,7 +1,6 @@
 package br.edu.infuse.app.strategy;
 
 import br.edu.infuse.app.exception.BadRequestException;
-import br.edu.infuse.app.exception.NotFoundException;
 import br.edu.infuse.app.model.EntityDomain;
 import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.service.ClientService;

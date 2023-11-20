@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.edu.infuse.app.mapper.ClientMapper;
-import br.edu.infuse.app.mapper.OrderMapper;
+import br.edu.infuse.app.exception.BadRequestException;
 import br.edu.infuse.app.vh.ClientVh;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +38,7 @@ public class AppController {
 	private Map<String, EntityVh> viewHelper;
 	
 	@Autowired
-	public AppController(OrderService orderService,ClientService clientService,
-						 OrderMapper orderMapper, ClientMapper clientMapper) {
+	public AppController(OrderService orderService,ClientService clientService) {
 		this.orderService = orderService;
 		this.clientService = clientService;
 		this.service = new HashMap<>();
@@ -75,7 +73,18 @@ public class AppController {
 	@PostMapping(value = PathUtils.SAVE, produces = {"application/json", "application/xml"},
 			consumes = {"application/json", "application/xml"})
 	public List<EntityVo> save(@PathVariable(EntityUtils.ENTITY) String entity, @RequestBody List<EntityVo> entityVoList) {
+		List<EntityVo> response = new ArrayList<>();
+		if(entityVoList.size() > 10) {
+			throw new BadRequestException("Quantidade acima do permitido: " + entityVoList.size());
+		}
+		entityVoList.forEach(vo -> response.add(this.saveEntity(entity, vo)));
+		return response;
+	}
 
-		return null;
+	private EntityVo saveEntity(String entity, EntityVo vo) {
+		EntityDomain request = this.viewHelper.get(entity).getEntity(vo);
+		EntityDomain response = this.service.get(entity).save(request);
+		EntityVo responseVo = this.viewHelper.get(entity).getEntityVo(response);
+		return responseVo;
 	}
 }
