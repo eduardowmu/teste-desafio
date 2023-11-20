@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+//Value Object (VO) Patterns
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
