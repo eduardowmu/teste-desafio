@@ -24,7 +24,7 @@ public class ValidateControlNumber implements Validator {
 			throw new BadRequestException("Numero de controle inválido!");
 		}
 		Optional<List<Order>> existedOrder = this.orderRepository.findByControlCode(order.getControlCode());
-		if(existedOrder.isPresent()) {
+		if(existedOrder.isPresent() && existedOrder.get().size() > 0) {
 			throw new BadRequestException("Numero controle já existente! " + order.getControlCode());
 		}
 		return order;
