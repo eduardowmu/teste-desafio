@@ -1,4 +1,4 @@
-Para teste, utlizar o swagger:
+Para teste, pode utlizar o swagger ao executar o projeto:
 https://localhost:{PORTA}/swagger-ui/index.html
 
 ATENÇÃO! Atentar para as informações escritas nas descrições, como o formato da data (orderDate).
