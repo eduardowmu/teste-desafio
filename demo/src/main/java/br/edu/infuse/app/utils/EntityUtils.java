@@ -19,7 +19,7 @@ public class EntityUtils {
 				.productName(vo.getProductName() != null ? vo.getProductName() : "")
 				.productValue(vo.getProductValue() != null ? vo.getProductValue() : 0.00)
 				.quantity(getValue(vo.getQuantity()))
-				.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() : vo.getProductValue() * getValue(vo.getQuantity()))
+				.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() : getValue(vo.getProductValue()) * getValue(vo.getQuantity()))
 				.customerCode(vo.getCustomerCode() != null ? vo.getCustomerCode() : 0)
 				.build();
 		return order;
@@ -34,8 +34,8 @@ public class EntityUtils {
 					.productName(order.getProductName() != null ? order.getProductName() : "")
 					.productValue(order.getProductValue() != null ? order.getProductValue() : 0.00)
 					.quantity(getValue(order.getQuantity()))
-					.orderValue(order.getOrderValue() != null ? order.getOrderValue() : 
-						order.getProductValue() * getValue(order.getQuantity()))
+					.orderValue(order.getOrderValue() != null ? order.getOrderValue() :
+							getValue(order.getProductValue()) * getValue(order.getQuantity()))
 					.customerCode(order.getCustomerCode() != null ? order.getCustomerCode() : 0)
 					.build();
 	}
@@ -55,5 +55,9 @@ public class EntityUtils {
 
 	private static Integer getValue(Integer value) {
 		return value != null && value != 0 ? value : 1;
+	}
+
+	private static Double getValue(Double value) {
+		return value != null ? value : 0.0;
 	}
 }
