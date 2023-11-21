@@ -10,6 +10,7 @@ import br.edu.infuse.app.repository.OrderRepository;
 public class EventUtils {	
 	public static final String SAVE = "save";
 	public static final String LIST = "list";
+	public static final String FIND = "find";
 	
 	public static Message saveException(Exception e) {
 		return Message.builder()

@@ -28,4 +28,9 @@ public class MessageService extends FacadeImpl {
 		messages.stream().forEach(m -> entities.add(m));
 		return entities;
 	}
+
+	@Override
+	public EntityDomain findOne(EntityDomain ed) {
+		return null;
+	}
 }
