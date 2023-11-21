@@ -64,6 +64,7 @@ public class ValidateTest {
     @Test
     void ValidateControlNumberExistTest() {
         order.setControlCode("1234");
+        this.orders.add(order);
         Optional<List<Order>> orderOptional = Optional.of(orders);
         when(this.orderRepository.findByControlCode(anyString())).thenReturn(orderOptional);
         Assertions.assertThrows(RuntimeException.class, () -> this.validateControlNumber.process(order));
