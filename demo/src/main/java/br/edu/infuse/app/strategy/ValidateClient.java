@@ -7,6 +7,8 @@ import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 public class ValidateClient implements Validator {
     private final ClientService clientService;
     @Autowired

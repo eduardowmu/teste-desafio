@@ -21,12 +21,4 @@ public class ValidationExceptionDetails extends ExceptionDetails {
         this.fields = fields;
         this.fieldsMessages = fieldsMessages;
     }
-
-    public String getFields() {
-        return fields;
-    }
-
-    public String getFieldsMessages() {
-        return fieldsMessages;
-    }
 }

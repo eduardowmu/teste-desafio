@@ -6,15 +6,16 @@ import org.springframework.stereotype.Repository;
 import br.edu.infuse.app.model.Order;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-	Optional<Order> findByControlCode(String controlCode);
-	Optional<Order> findByOrderDate(LocalDateTime orderDate);
-	Optional<Order> findByOrderValue(Double orderValue);
-	Optional<Order> findByProductName(String productName);
-	Optional<Order> findByProductValue(Double productValue);
-	Optional<Order> findByQuantity(Integer quantity);
-	Optional<Order> findByCustomerCode(Long customerCode);
+	Optional<List<Order>> findByControlCode(String controlCode);
+	Optional<List<Order>> findByOrderDate(LocalDateTime orderDate);
+	Optional<List<Order>> findByOrderValue(Double orderValue);
+	Optional<List<Order>> findByProductName(String productName);
+	Optional<List<Order>> findByProductValue(Double productValue);
+	Optional<List<Order>> findByQuantity(Integer quantity);
+	Optional<List<Order>> findByCustomerCode(Long customerCode);
 }

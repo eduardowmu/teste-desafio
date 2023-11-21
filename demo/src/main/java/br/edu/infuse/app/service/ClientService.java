@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import br.edu.infuse.app.exception.BadRequestException;
 import br.edu.infuse.app.utils.EventUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class ClientService extends FacadeImpl {
 		try {
 			Client client = (Client)ed;
 			return this.clientRepository.save(client);
-		}catch (Exception e) {
+		}catch (RuntimeException e) {
 			this.messageService.save(EventUtils.saveException(e));
 			throw e;
 		}
@@ -39,7 +38,7 @@ public class ClientService extends FacadeImpl {
 			List<EntityDomain> entityDomains = new ArrayList<>();
 			clients.forEach(c -> entityDomains.add(c));
 			return entityDomains;
-		}catch (Exception e) {
+		}catch (RuntimeException e) {
 			this.messageService.save(EventUtils.saveException(e));
 			throw e;
 		}
@@ -53,7 +52,7 @@ public class ClientService extends FacadeImpl {
 	public Optional<Client> findById(Long id) {
 		try {
 			return this.clientRepository.findById(id);
-		}catch (Exception e) {
+		}catch (RuntimeException e) {
 			this.messageService.save(EventUtils.saveException(e));
 			throw e;
 		}

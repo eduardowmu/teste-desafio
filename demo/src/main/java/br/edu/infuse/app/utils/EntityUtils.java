@@ -12,16 +12,17 @@ public class EntityUtils {
 	public static final String ENTITY = "entity";
 	
 	public static Order getOrderFromEntityVo(EntityVo vo) {
-		return Order.builder()
-					.controlCode(vo.getControlCode() != null ? vo.getControlCode() : "")
-					.orderDate(vo.getOrderDate() != null && !vo.getOrderDate().isEmpty() ?
-							FormatUtils.localDateFormat(vo.getOrderDate()) : LocalDateTime.now())
-					.productName(vo.getProductName() != null ? vo.getProductName() : "")
-					.productValue(vo.getProductValue() != null ? vo.getProductValue() : 0.00)
-					.quantity(getValue(vo.getQuantity()))
-					.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() : vo.getProductValue() * getValue(vo.getQuantity()))
-					.customerCode(vo.getCustomerCode() != null ? vo.getCustomerCode() : 0)
-					.build();
+		Order order = Order.builder()
+				.controlCode(vo.getControlCode() != null ? vo.getControlCode() : "")
+				.orderDate(vo.getOrderDate() != null && !vo.getOrderDate().isEmpty() ?
+						FormatUtils.localDateFormat(vo.getOrderDate()) : LocalDateTime.now())
+				.productName(vo.getProductName() != null ? vo.getProductName() : "")
+				.productValue(vo.getProductValue() != null ? vo.getProductValue() : 0.00)
+				.quantity(getValue(vo.getQuantity()))
+				.orderValue(vo.getOrderValue() != null ? vo.getOrderValue() : vo.getProductValue() * getValue(vo.getQuantity()))
+				.customerCode(vo.getCustomerCode() != null ? vo.getCustomerCode() : 0)
+				.build();
+		return order;
 	}
 	
 	public static EntityVo getEntityVoFromOrder(Order order) {

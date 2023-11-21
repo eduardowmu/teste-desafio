@@ -12,7 +12,7 @@ public class ValidateDiscount implements Validator {
 	}
 	
 	private Double setOrderValueWithDiscount(Integer quantity, Double value) {
-		return quantity > 5 ? value * 0.95 : 
+		return quantity > 5 && quantity < 10 ? value * 0.95 :
 				quantity >= 10 ? value * 0.90 : value;
 	}
 }
