@@ -10,3 +10,15 @@ Strategy
 VH -> View Helper
 
 Além do padrão arquitetural MVC -> Model View Controller.
+
+Segue exemplo de payload para criação de Pedidos:
+
+[
+    {
+        "controlCode": "4571",
+        "productName": "produto 5",
+        "productValue": 400.00,
+        "customerCode": 10,
+        "quantity": 3
+    }
+]
