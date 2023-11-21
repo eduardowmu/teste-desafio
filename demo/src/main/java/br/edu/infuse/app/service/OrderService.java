@@ -1,6 +1,5 @@
 package br.edu.infuse.app.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,15 +21,6 @@ public class OrderService extends FacadeImpl {
 	private final ClientService clientService;
 
 	private final MessageService messageService;
-//	@Autowired
-//	private OrderRepository orderRepository;
-//
-//	@Autowired
-//	private ClientService clientService;
-//
-//	@Autowired
-//	private MessageService messageService;
-
 	@Autowired
 	public OrderService(OrderRepository orderRepository, ClientService clientService,
 						MessageService messageService) {
@@ -94,7 +84,7 @@ public class OrderService extends FacadeImpl {
 	public Order findOne(EntityDomain ed) {
 		try {
 			Order order = (Order)this.getEntityFromRules(ed, EventUtils.FIND);
-			return order;//(Order)this.getEntityFromRules(ed, EventUtils.FIND);
+			return order;
 		} catch (RuntimeException e) {
 			this.messageService.save(EventUtils.saveException(e));
 			throw e;
