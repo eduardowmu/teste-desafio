@@ -1,5 +1,6 @@
 package br.edu.infuse.app.model;
 
+import br.edu.infuse.app.vo.EntityVo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 public class ModelTest {
     private Order order;
     private Message message;
+    private EntityVo entityVo;
 
     @BeforeEach
     void setup() {
@@ -26,6 +28,7 @@ public class ModelTest {
                 .build();
 
         this.message = new Message();
+        this.entityVo = new EntityVo();
     }
 
     @Test
@@ -42,5 +45,11 @@ public class ModelTest {
         this.message.getErrorDate();
         this.message.getId();
         Assertions.assertTrue(this.message.getMsg().isEmpty());
+    }
+
+    @Test
+    void entityVoTest() {
+        this.entityVo.setId(1L);
+        Assertions.assertTrue(this.entityVo.getId() > 0L);
     }
 }
