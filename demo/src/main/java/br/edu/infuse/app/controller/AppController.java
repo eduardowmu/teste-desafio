@@ -1,6 +1,5 @@
 package br.edu.infuse.app.controller;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.Map;
 import br.edu.infuse.app.exception.BadRequestException;
 import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.vh.ClientVh;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,15 +50,17 @@ public class AppController {
 		this.viewHelper.put(EntityUtils.ORDER, this.orderVh);
 		this.viewHelper.put(EntityUtils.CLIENT, this.clientVh);
 	}
-	
+
+	@Operation(summary = "Listagem de, pedidos (entity = order) ou clientes (entity = client), cadastrados na base")
 	@GetMapping(value = PathUtils.LIST, produces = {"application/json","application/xml"})
 	public List<EntityVo> listAll(@PathVariable(EntityUtils.ENTITY) String entity) {
 		List<EntityDomain> entities = this.service.get(entity).listAll();
 		List<EntityVo> listVo = new ArrayList<>();
-		entities.stream().forEach(e -> listVo.add(this.orderVh.getEntityVo(e)));
+		entities.stream().forEach(e -> listVo.add(this.viewHelper.get(entity).getEntityVo(e)));
 		return listVo;
 	}
 
+	@Operation(summary = "Pesquisa de pedido através de filtro. ATENÇÃO: orderDate -> dd/MM/yyyy HH:mm:ss")
 	@GetMapping(produces = {"application/json", "application/xml"})
 	public EntityVo findEntity(@RequestParam("controlCode") String controlCode, @RequestParam("orderDate") String orderDate,
 							   @RequestParam("orderValue") Double orderValue, @RequestParam("productName") String productName,
@@ -79,6 +81,8 @@ public class AppController {
 		return this.viewHelper.get(EntityUtils.ORDER).getEntityVo(response);
 	}
 
+	@Operation(summary = "Criação de uma lista de pedidos (entity = order) ou de clientes (entity = client). " +
+			"ATENÇÃO: orderDate -> dd/MM/yyyy HH:mm:ss")
 	@PostMapping(value = PathUtils.SAVE, produces = {"application/json", "application/xml"},
 			consumes = {"application/json", "application/xml"})
 	public List<EntityVo> save(@PathVariable(EntityUtils.ENTITY) String entity, @RequestBody List<EntityVo> entityVoList) {

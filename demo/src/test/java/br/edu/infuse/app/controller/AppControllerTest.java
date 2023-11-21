@@ -1,5 +1,6 @@
 package br.edu.infuse.app.controller;
 
+import br.edu.infuse.app.exception.BadRequestException;
 import br.edu.infuse.app.model.EntityDomain;
 import br.edu.infuse.app.model.Order;
 import br.edu.infuse.app.service.ClientService;
@@ -113,5 +114,13 @@ public class AppControllerTest {
         when(this.orderService.save(any(Order.class))).thenReturn(this.order);
         when(this.orderVh.getEntityVo(any(Order.class))).thenReturn(this.entityVo);
         Assertions.assertNotNull(this.appController.save("order", this.entityVoList));
+    }
+
+    @Test
+    void saveTestWithOverLimitTest() {
+        for(int i = 0; i < 12; i++) {
+            this.entityVoList.add(this.entityVo);
+        }
+        Assertions.assertThrows(BadRequestException.class, () -> this.appController.save("order", this.entityVoList));
     }
 }

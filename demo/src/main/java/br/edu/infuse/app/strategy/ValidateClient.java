@@ -20,7 +20,7 @@ public class ValidateClient implements Validator {
     public EntityDomain process(EntityDomain ed) throws BadRequestException {
         Order order = (Order)ed;
         Client client = this.clientService.findById(order.getCustomerCode())
-                .orElseThrow(() -> new BadRequestException("Cliente não encontrado!"));
+                .orElseThrow(() -> new BadRequestException("Cliente não encontrado! " + order.getCustomerCode()));
         return order;
     }
 }
